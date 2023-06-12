@@ -30,7 +30,7 @@ ALTER TABLE food_info MODIFY COLUMN cost int;
 
 CREATE TABLE fertilizer(id int ,fertilizer_name varchar(20),fertlizer_type varchar(20),cost float,total_nitrogen varchar(20),phosphate varchar(20),potash varchar(20),calcium varchar(20),magnesium varchar(20),sulphur varchar(20),boron varchar(20),chlorine varchar(20),cobalt varchar(20),copper varchar(20),iron varchar(20),manganese varchar(20));
 select* from fertilizer;
-DROP TABLE fertilizer;
+fertilizerDROP TABLE fertilizer;
 
 ALTER TABLE fertilizer ADD   COLUMN sodium varchar(20);
 ALTER TABLE fertilizer ADD COLUMN molybdenum varchar(20);
@@ -174,11 +174,137 @@ select* from trip_plan where  objective='enjoy';
 
 
 
+/* Aggregate functions*/
+/*count*/
+SELECT count(no_of_days) from trip_plan;
+select count(cost) from fertilizer;
+select count(cost) from food_info;
+select count(no_of_resorts) from trip_plan;
+select count(no_of_homestays) from trip_plan;
+
+/*add*/
+SELECT sum(cost) from fertilizer;
+SELECT sum(cost) from food_info;
+SELECT sum(no_of_days) from trip_plan;
+SELECT sum(patassium_in_g) from food_info ;
+select sum(sugars_in_g) from food_info;
+
+/*min*/
+select min(servings_per_package) from food_info;
+select min(dietary_fat_in_g) from food_info;
+select min(cost)from fertilizer;
+select min(no_of_resorts) from trip_plan;
+select min(no_of_homestays) from trip_plan;
+
+/*max*/
+select max(cost) from food_info;
+select max(cost) from fertilizer;
+select max(no_of_resorts) from trip_plan;
+select max(distance_in_km) from trip_plan;
+select max(id) from trip_plan;
+
+/*avg*/
+select avg(distance_in_km) from trip_plan;
+select avg(cost) from food_info;
+select avg(no_of_days) from trip_plan;
+select avg(cost) from fertilizer;
+select avg(dietary_fat_in_g) from food_info;
+
+/*INSTR-finds the place value */
+select destination ,INSTR(destination,'A') from trip_plan;
+select fertilizer_name,INSTR(fertilizer_name,'E') from fertilizer;
+select cost,INSTR(cost,'6') from fertilizer;
+select cost,INSTR(cost,'A') from fertilizer;
+select temples,INSTR(temples,'P')from trip_plan;
+
+select INSTR('nest','E');
+select INSTR('find','n');
+select INSTR('Bamboo','b');
+select INSTR('Bottle','B');
+select INSTR('rabbit','b');
+
+/*substr-prints gives till required pplace value*/
+select SUBSTR('ashwinibvijay',8,10);
+select SUBSTR('Banadahalli Belur',13,6);
+select SUBSTR('Mahadeva',5,6);
+select SUBSTR('Mahadeva',5,7);
+
+select destination ,SUBSTR(destination,3,6) from trip_plan;
+select objective,substr(objective,4,6) from trip_plan;
+select temples,substr(temples,3,7) from trip_plan;
+select resort_name,substr(resort_name,4,7) from trip_plan;
 
 
+/*Like-pattern matching for string*/
+Select* from fertilizer where fertilizer_name like'P%';
+ Select * from fertilizer where fertilizer_name like'%P';
+ Select* from fertilizer where fertilizer_name like'%p%p';
+ select* from fertilizer where fertilizer_name like '%p%p%';
+ 
+ select *from fertilizer where fertilizer_name not like '%p';
+ select* from fertilizer where fertilizer_name not like 'p%';
+ select * from fertilizer where fertilizer_name not like 'p%%p';
+ select* from fertilizer where fertilizer_name not like '%p%p%';
+ 
+
+/*lower-converts column values  of the column to lower case*/
+select lower(fertilizer_name) from fertilizer;
+select lower(destination) from trip_plan;
+select lower(product_name) from food_info;
+
+/*upper-converts string values of the column to upper case */
+select upper(fertilizer_name) from fertilizer; 
+select upper(product_name) from food_info;
+select upper(destination) from trip_plan;
+
+/*concat-to join 2 columns,does not effect original data*/
+select* from trip_plan;
+select concat(destination,no_of_resorts) from trip_plan;
+select concat(id,destination) from trip_plan;
+select concat(no_of_homestays,homestay_name) from trip_plan;
+
+/*length*/
+select length(destination) from trip_plan;
+select length(fertilizer_name) from fertilizer;
+select length(objective) from trip_plan;
+select length(falls) from trip_plan;
+
+/*LTRIM-Remove leading spaces*/
+select* from fertilizer;
+Update fertilizer SET fertilizer_name='  Annapurna  ' where id=1;
+SELECT LTRIM(fertilizer_name) from fertilizer;
+UPDATE fertilizer SET fertilizer_name='  NUVIQO  ' where id=2;
+UPDATE bank_info SET bank_name='  SBI  ' where id=1;
+SELECT LTRIM (bank_name) from bank_info;
+UPDATE trip_plan SET destination='  Chikkamagaluru  ' where id=1;
+select* from trip_plan;
+SELECT LTRIM(destination) from trip_plan;
+
+/*RTRIM-remove space sfrom railing side*/
+SELECT RTRIM(destination) from trip_plan;
+SELECT rtrim(bank_name) from bank_info;
+SELECT length(destination) from trip_plan;
+SELECT RTRIM(fertilizer_name) from fertilizer;
+SELECT LTRIM(RTRIM(destination)) from trip_plan;
+
+/*LPAD-add values to leading side*/
+SELECT LPAD('Ashwini',9,'BV');
+SELECT LPAD('ASHWINI',13,'BV');
+SELECT LPAD('ASHWINI',2,'BV');
+/*if length of the string is more than given value then it prints those many value of lettes,eg it prints only as for above case*/
+
+SELECT RPAD('ASHWINI',9,'BV');
+SELECT RPAD('ASHWINI',15,'BVIJAY');
+SELECT RPAD('SUN',9,'SHINE');
 
 
+/*dup-creating duplicate table from existing table */
+CREATE TABLE trip_plan_dup  AS SELECT * from trip_plan;
+select* from trip_plan_dup;
+CREATE TABLE fertilizer_dup AS SELECT*  from fertilizer; 
+select* from fertilizer_dup;
+CREATE TABLE food_info_dup AS SELECT * from food_info; 
+select* from food_info_dup;
 
-
-
-
+delete from trip_plan_dup where id=3;
+delete from fertilizer_dup where id=2;
