@@ -11,6 +11,7 @@ INSERT INTO bank_info values(6,'Punjab ','Canara',300000,'675');
 INSERT INTO bank_info values(7,'Punjab ','Eshwar',700000,'775');
 INSERT INTO bank_info values(8,'SBI','Arjun',356000,'135');
 INSERT INTO bank_info values(9,'SBI','Shiv',356000,'135'); 
+INSERT INTO bank_info values(5,'SBI','Adithi',356000,'135'); 
 
 select* from  bank_info;
 
@@ -87,7 +88,39 @@ select* from  bank_info;
   SELECT bank_name, INSTR(bank_name ,'B') from bank_info;
   
   SELECT SUBSTR('XWORKZODC',4,3);
-  
+  select * from bank_info;
+  select bank_name,max(balance) from bank_info group by bank_name;
+  delete from bank_info where id=1;
+  insert into bank_info values(1,'SBI','Ram',450000,457);
+ select * from bank_info  order by id;
+ commit;
+ rollback;
+ 
+  /* group by-used to combine similar values into single column*/
+select bank_name,max(balance) from bank_info group by bank_name;
+select bank_name,account_holder from bank_info group by account_holder;
+select bank_name,avg(balance) from bank_info group by bank_name;
+ select account_holder,max(balance) from bank_info group by balance;
+ select bank_name, count(account_holder) from bank_info group by bank_name;
 
- 
- 
+/*Having-to filter data whatever group by returns*/
+select bank_name,sum(balance) from bank_info group by bank_name having sum(balance)>500000
+select account_holder,max(balance) from bank_info group by bank_name having max(balance)<400000;
+select account_holder,max(balance) from bank_info group by account_holder having max(balance)>400000;
+
+
+/*Views*/
+Create view bank_info_view as select* from bank_info;
+Create view bank_info_view1 as select id, bank_name from bank_info;
+Create view bank_info_view_2 as select account_holder,balance from bank_info;
+select* from bank_info_view_2;
+select * from bank_info_view1;
+Create view bank_info_view3 as select id, bank_name from bank_info;
+
+
+/*Alias*/
+select bank_name as b,max(balance) as balance from bank_info group by b;
+select bank_name,max(balance) as max from bank_info; 
+select bank_name as bank,avg(balance)  as Average from bank_info;
+
+
